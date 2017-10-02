@@ -1,8 +1,7 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
-  has_many :apartmentsLogins
-  has many :apartments, through: :apartmentsLogins
+  has_and_belongs_to_many(:apartments)
 end
   # users.password_hash in the database is a :string
   # include BCrypt
