@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20171002174143) do
     t.integer "apartment_id"
   end
 
-  create_table "logins", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password"
     t.string "username"
