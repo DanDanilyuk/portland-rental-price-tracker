@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  database: rent_tracker_development
+
+test:
+  adapter: postgresql
+  database: rent_tracker_test
