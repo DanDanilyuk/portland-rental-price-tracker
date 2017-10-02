@@ -5,9 +5,9 @@ class CreateInitialTables < ActiveRecord::Migration[5.1]
       t.column(:password, :string)
       t.column(:username, :string)
     end
-    create_table(:apartmentsLogins) do |t|
-      t.column(:login_id, :integer)
+    create_table(:apartments_users) do |t|
       t.column(:apartment_id, :integer)
+      t.column(:user_id, :integer)
     end
     create_table(:apartments) do |t|
       t.column(:url, :string)

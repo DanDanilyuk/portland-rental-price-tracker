@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20171002174143) do
     t.date "date"
   end
 
-  create_table "apartmentsLogins", force: :cascade do |t|
-    t.integer "login_id"
+  create_table "apartments_users", force: :cascade do |t|
     t.integer "apartment_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|

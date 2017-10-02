@@ -1,4 +1,3 @@
 class Apartment <ActiveRecord::Base
-  has_many :apartmentsLogins
-  has many :users, through: :apartmentsLogins
+  has_and_belongs_to_many(:users)
 end
