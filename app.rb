@@ -12,12 +12,21 @@ Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 apartments = Apartment.search_craigs
 
 apartments.each do |apartment|
-  binding.pry
   if Apartment.exists?({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2]}) == false
 
     Apartment.create({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2], :url => nil, :quadrant => nil})
   end
 end
+
+def ave_rent(array)
+  avg = 0
+  array.each do |listing|
+    avg += listing.price
+  end
+  avg / array.length
+end
+
+puts x = ave_rent(Apartment.where("rooms = '1'"))
 
 binding.pry
 get '/login' do
