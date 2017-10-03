@@ -10,16 +10,11 @@ class Apartment <ActiveRecord::Base
 #Southeast Portland 97206
 #Southwest Portland 97221
 
-
+  apts = []
   def self.search_craigs(url, quadrant)
   html_data = open(url).read
   nokogiri_object = Nokogiri::HTML(html_data)
   result = nokogiri_object.xpath("//a[@class='result-title hdrlnk']/@href")
-  results = []
-  result.each do |link|
-    results.push(link.text)
-  end
-  apts = []
   result.each do |link|
     html_title = open(link).read
     nokogiri_object_title = Nokogiri::HTML(html_title)
@@ -55,6 +50,5 @@ class Apartment <ActiveRecord::Base
       end
     end
     apts.push(name: (title.text),url: (link.value),price: (price),bed: (br),bath: (bathroom),sqft: (sqft),address: (address_street.children.text),cat: (cat_ok),dog: (dog_ok),washer: (washer_ok),smoke: (smoking_ok),garage: (garage_ok),description: (more_infos),section: (quadrant))
-    apts
   end
 end
