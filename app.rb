@@ -1,16 +1,25 @@
 require 'bundler/setup'
 require 'open-uri'
-require 'pry'
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
+#Southwest Portland 97221
+# def self.search_craigs(url, quadrant)
+apartments_north_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-apartments = Apartment.search_craigs
+apartments_northeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?search_distance=2&postal=97213&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 
-apartments.each do |apartment|
-  if Apartment.exists?({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2]}) == false
+apartments_northwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?search_distance=2&postal=97229&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northwest Portland")
 
-    Apartment.create({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2], :url => nil, :quadrant => nil})
+apartments_southeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?search_distance=2&postal=97206&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southeast Portland")
+
+apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?search_distance=2&postal=97221&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
+
+all_quadrants = apartments_north_portland + apartments_northeast_portland + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
+all_quadrants.each do |x|
+  if Apartment.exists?({:name => x[:name],:address => x[:address],:price => x[:price]}) == false
+
+    Apartment.create({:name => x[:name], :url => x[:url], :price => x[:price], :bed => x[:bed], :bath => x[:bath], :sqft => x[:sqft], :address => x[:address], :cat => x[:cat], :dog => x[:dog], :washer => x[:washer], :smoke => x[:smoke], :garage => x[:garage], :description => x[:description], :section => x[:section], :posted => x[:posted]})
   end
 end
 
@@ -47,10 +56,10 @@ end
 # end
 
 get '/' do
-  @br1avg = ave_rent(Apartment.where("rooms = '1'")).to_i
-  @br1med = median(Apartment.where("rooms = '1'")).to_i
-  @br1high = Apartment.where('rooms = 1').order(:price)[-1].price
-  @br1low = Apartment.where('rooms = 1').order(:price)[0].price
+  @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
+  @br1med = median(Apartment.where("bed = '1'")).to_i
+  @br1high = Apartment.where('bed = 1').order(:price)[-1].price
+  @br1low = Apartment.where('bed = 1').order(:price)[0].price
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
@@ -62,6 +71,14 @@ get '/login' do
   erb(:login)
 end
 
+get '/user' do
+  erb(:user)
+end
+
+get '/signup' do
+  erb(:signup)
+end
+
 post '/login' do
   email = params['email']
   password = params['password']
@@ -71,10 +88,6 @@ post '/login' do
   else
     erb(:login)
   end
-end
-
-get '/signup' do
-  erb(:signup)
 end
 
 post '/signup' do

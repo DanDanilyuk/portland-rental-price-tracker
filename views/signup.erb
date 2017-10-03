@@ -1,0 +1,40 @@
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+    background-image: url(/img/background_img4.jpg);
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.8;
+}
+</style>
+<body>
+ 
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="w3-display-topleft w3-padding-large w3-xlarge">
+      <a href="/" class="w3-bar-item w3-button">HOME</a>
+    </div>
+    <div class="w3-display-middle">
+      <h1 class="w3-jumbo w3-animate-top">CREATE ACCOUNT</h1>
+      <form action='/signup' method="post">
+        <div class="form-group">
+          <input id="name" name="name" class="form-control" type="text" placeholder="Username" required><br>
+          <input id="name" name="name" class="form-control" type="text" placeholder="Email" required><br>
+          <input id="name" name="name" class="form-control" type="password" placeholder="Password" required><br>
+          <button type="submit" class="btn btn-info">Sign Up</button>
+        </div>
+      </form>
+    </div>
+    <div class="w3-display-topright w3-padding-large">
+      SIGN UP
+    </div>
+  </div>
+
+</body>
+</html>
