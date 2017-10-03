@@ -26,6 +26,11 @@ def ave_rent(array)
   avg / array.length
 end
 
+def median(array) #sort array
+  med = array[array.size/2]
+  med.price
+end
+
 puts x = ave_rent(Apartment.where("rooms = '1'"))
 
 binding.pry

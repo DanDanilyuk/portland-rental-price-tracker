@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20171002235353) do
     t.string "title"
   end
 
-  create_table "apartmentsLogins", force: :cascade do |t|
-    t.integer "login_id"
+  create_table "apartments_users", force: :cascade do |t|
     t.integer "apartment_id"
+    t.integer "user_id"
   end
 
-  create_table "logins", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password"
     t.string "username"
