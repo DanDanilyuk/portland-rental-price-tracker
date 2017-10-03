@@ -1,13 +1,10 @@
-<<<<<<< HEAD
-require("bundler/setup")
+require 'bundler/setup'
 require 'open-uri'
 require 'pry'
 
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
-
-
 
 
 apartments = Apartment.search_craigs
@@ -26,10 +23,14 @@ def ave_rent(array)
   end
   avg / array.length
 end
+#
+# puts x = ave_rent(Apartment.where("rooms = '1'"))
+#
 
-puts x = ave_rent(Apartment.where("rooms = '1'"))
+get '/' do
+  erb(:index)
+end
 
-binding.pry
 get '/login' do
   erb(:login)
 end
@@ -55,16 +56,4 @@ post '/signup' do
   password = BCrypt::Password.create(params['password'])
   user = User.create({:username => username, :email => email, :password => password})
   redirect("/user/#{user.id}")
-=======
-require 'bundler/setup'
-require 'pry'
-Bundler.require(:default)
-
-Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
-
-#Index Routes
-get('/') do
-
-  erb(:index)
->>>>>>> layout
 end
