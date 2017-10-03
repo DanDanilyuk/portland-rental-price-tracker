@@ -1,4 +1,4 @@
-require("bundler/setup")
+require 'bundler/setup'
 require 'open-uri'
 require 'pry'
 
@@ -22,19 +22,21 @@ def ave_rent(array)
   avg / array.length
 end
 
-def median(array) #sort array
+# puts x = ave_rent(Apartment.where("rooms = '1'"))
+
+def median(array)
   med = array[array.size/2]
   med.price
-end
-
-get '/login' do
-  erb(:login)
 end
 
 get '/' do
   @br1avg = ave_rent(Apartment.where("rooms = '1'"))
   @br1med = median(Apartment.where("rooms = '1'"))
   erb(:index)
+end
+
+get '/login' do
+  erb(:login)
 end
 
 post '/login' do
