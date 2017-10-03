@@ -1,6 +1,9 @@
 require 'bundler/setup'
 require 'open-uri'
 
+Bundler.require(:default)
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
+
 get '/update' do
   #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
@@ -23,9 +26,6 @@ get '/update' do
   end
 redirect '/'
 end
-
-Bundler.require(:default)
-Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 def ave_rent(array)
   avg = 0
