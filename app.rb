@@ -19,21 +19,44 @@ def ave_rent(array)
   array.each do |listing|
     avg += listing.price
   end
-  avg / array.length
+  (avg / array.length)
 end
 
 # puts x = ave_rent(Apartment.where("rooms = '1'"))
 
 def median(array)
   med = array[array.size/2]
-  med.price
+  (med.price)
 end
 
+def ave_sqr(array)
+  avg = 0
+  array.each do |listing|
+    avg += listing.sq_ft
+  end
+  (avg / array.length)
+end
+
+def median_sqr(array)
+  med = array[array.size/2]
+  (med.sq_ft)
+end
+
+# def percent_of(n)
+#   self * 100.0 /n
+# end
+
 get '/' do
-  @br1avg = ave_rent(Apartment.where("rooms = '1'"))
-  @br1med = median(Apartment.where("rooms = '1'"))
+  @br1avg = ave_rent(Apartment.where("rooms = '1'")).to_i
+  @br1med = median(Apartment.where("rooms = '1'")).to_i
+  @br1high = Apartment.where('rooms = 1').order(:price)[-1].price
+  @br1low = Apartment.where('rooms = 1').order(:price)[0].price
+  @avg_percent = (@br1avg * 100.0 /@br1high).floor
+  @med_percent = (@br1med * 100.0 /@br1high).floor
+  @low_percent = (@br1low * 100.0 /@br1high).floor
   erb(:index)
 end
+
 
 get '/login' do
   erb(:login)
@@ -60,4 +83,8 @@ post '/signup' do
   password = BCrypt::Password.create(params['password'])
   user = User.create({:username => username, :email => email, :password => password})
   redirect("/user/#{user.id}")
+end
+
+get 'user/:id' do
+  erb(:user)
 end
