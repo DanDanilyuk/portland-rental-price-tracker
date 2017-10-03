@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003212050) do
+ActiveRecord::Schema.define(version: 20171003224120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 20171003212050) do
   create_table "apartments_users", force: :cascade do |t|
     t.integer "apartment_id"
     t.integer "user_id"
+  end
+
+  create_table "averages", force: :cascade do |t|
+    t.integer "avg_1br"
+    t.integer "avg_2br"
+    t.integer "avg_3br"
+    t.integer "avg_4br"
+    t.string "section"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
