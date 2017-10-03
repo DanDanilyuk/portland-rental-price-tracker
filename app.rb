@@ -1,4 +1,25 @@
+require("bundler/setup")
+require 'open-uri'
+require 'pry'
 
+
+Bundler.require(:default)
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
+
+
+
+
+apartments = Apartment.search_craigs
+
+apartments.each do |apartment|
+  binding.pry
+  if Apartment.exists?({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2]}) == false
+
+    Apartment.create({:title => apartment[4], :price => apartment[0], :sq_ft => apartment[1], :rooms => apartment[3], :location => apartment[2], :url => nil, :quadrant => nil})
+  end
+end
+
+binding.pry
 get '/login' do
   erb(:login)
 end
