@@ -14,7 +14,6 @@ apartments_northwest_portland = Apartment.search_craigs('https://portland.craigs
 
 apartments_southeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97206&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southeast Portland")
 
-<<<<<<< HEAD
 apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97221&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
 
 all_quadrants = apartments_north_portland + apartments_northeast_portland + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
@@ -56,8 +55,11 @@ end
 # def percent_of(n)
 #   self * 100.0 /n
 # end
+<<<<<<< HEAD
 =======
 >>>>>>> pages
+=======
+>>>>>>> keegan
 
 get '/' do
   @br1avg = ave_rent(Apartment.where("rooms = '1'")).to_i
@@ -93,8 +95,6 @@ post '/login' do
     erb(:login)
   end
 end
-
-
 
 post '/signup' do
   username = params['username']
