@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <title>Portland Rent Data</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <head>
+    <title>Portland Rent Data</title>
+    <link rel="shortcut icon" href="/img/apt_icon.ico" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link href="<%= url('/../css/styles.css') %>" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
   <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
     body, html {
@@ -20,17 +25,17 @@
       background-repeat: no-repeat;
       background-size: cover;
     }
-    /* First image (Logo. Full height) */
+    /* First image */
     .bgimg-1 {
       background-image: url(/img/background_img.jpg);
       min-height: 100%;
     }
-    /* Second image (Portfolio) */
+    /* Second image */
     .bgimg-2 {
       background-image: url(/img/background_img3.jpg);
       min-height: 400px;
     }
-    /* Third image (Contact) */
+    /* Third image */
     .bgimg-3 {
       background-image: url(/img/background_img2.jpg);
       min-height: 400px;
@@ -46,23 +51,7 @@
   </style>
   <body>
     <%= yield %>
-    <!-- Add Google Maps -->
     <script>
-// function myMap()
-// {
-//   myCenter=new google.maps.LatLng(41.878114, -87.629798);
-//   var mapOptions= {
-//     center:myCenter,
-//     zoom:12, scrollwheel: false, draggable: false,
-//     mapTypeId:google.maps.MapTypeId.ROADMAP
-//   };
-//   var map=new google.maps.Map(document.getElementById("googleMap"),mapOptions);
-//
-//   var marker = new google.maps.Marker({
-//     position: myCenter,
-//   });
-//   marker.setMap(map);
-// }
 
 // Modal Image Gallery
     function onClick(element) {

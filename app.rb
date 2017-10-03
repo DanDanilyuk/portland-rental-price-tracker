@@ -72,6 +72,14 @@ get '/login' do
   erb(:login)
 end
 
+get '/user' do
+  erb(:user)
+end
+
+get '/signup' do
+  erb(:signup)
+end
+
 post '/login' do
   email = params['email']
   password = params['password']
@@ -81,10 +89,6 @@ post '/login' do
   else
     erb(:login)
   end
-end
-
-get '/signup' do
-  erb(:signup)
 end
 
 post '/signup' do
