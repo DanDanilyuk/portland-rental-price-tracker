@@ -2,10 +2,8 @@ require 'bundler/setup'
 require 'open-uri'
 require 'pry'
 
-
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
-
 
 apartments = Apartment.search_craigs
 
@@ -23,11 +21,17 @@ def ave_rent(array)
   end
   avg / array.length
 end
-#
+
 # puts x = ave_rent(Apartment.where("rooms = '1'"))
-#
+
+def median(array)
+  med = array[array.size/2]
+  med.price
+end
 
 get '/' do
+  @br1avg = ave_rent(Apartment.where("rooms = '1'"))
+  @br1med = median(Apartment.where("rooms = '1'"))
   erb(:index)
 end
 
