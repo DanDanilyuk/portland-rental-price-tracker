@@ -52,15 +52,6 @@ def median_sqr(array)
   (med.sq_ft)
 end
 
-# def percent_of(n)
-#   self * 100.0 /n
-# end
-<<<<<<< HEAD
-=======
->>>>>>> pages
-=======
->>>>>>> keegan
-
 get '/' do
   @br1avg = ave_rent(Apartment.where("rooms = '1'")).to_i
   @br1med = median(Apartment.where("rooms = '1'")).to_i
