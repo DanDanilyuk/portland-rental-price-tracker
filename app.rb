@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 require("bundler/setup")
 require 'open-uri'
 require 'pry'
@@ -54,4 +55,16 @@ post '/signup' do
   password = BCrypt::Password.create(params['password'])
   user = User.create({:username => username, :email => email, :password => password})
   redirect("/user/#{user.id}")
+=======
+require 'bundler/setup'
+require 'pry'
+Bundler.require(:default)
+
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
+
+#Index Routes
+get('/') do
+
+  erb(:index)
+>>>>>>> layout
 end
