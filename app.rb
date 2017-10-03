@@ -57,10 +57,10 @@ end
 # end
 
 get '/' do
-  @br1avg = ave_rent(Apartment.where("rooms = '1'")).to_i
-  @br1med = median(Apartment.where("rooms = '1'")).to_i
-  @br1high = Apartment.where('rooms = 1').order(:price)[-1].price
-  @br1low = Apartment.where('rooms = 1').order(:price)[0].price
+  @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
+  @br1med = median(Apartment.where("bed = '1'")).to_i
+  @br1high = Apartment.where('bed = 1').order(:price)[-1].price
+  @br1low = Apartment.where('bed = 1').order(:price)[0].price
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
