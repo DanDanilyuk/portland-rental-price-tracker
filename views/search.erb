@@ -76,3 +76,45 @@
 
  <button type="submit">Search</button>
 </form>
+
+
+
+<div class="container">
+  <% if @search.any? %>
+    <h2>Number of Results: <%= @search.length %>
+    <h2>Average Rent: $<%= ave_rent(@search) %>
+    <h2>Median: $<%= median(@search) %>
+
+    <h2>Results:</h2>
+    <table class="table table-striped table-info">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Sqft</th>
+          <th>Bed</th>
+          <th>Bath</th>
+          <th>Location</th>
+          <th>Link</th>
+          <th>Posted</th>
+        </tr>
+      </thead>
+    </tbody>
+      <% @search.each do |result| %>
+        <tr>
+          <td><%= result.name %></td>
+          <td>$<%= result.price %></td>
+          <td><%= result.sqft %> ft<sup>2</sup></td>
+          <td><%= result.bed %></td>
+          <td><%= result.bath %></td>
+          <td><%= result.section %></td>
+          <td><a href="<%= result.url %>">Link</td>
+          <td><%= result.posted %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <%else%>
+    <h2>No Results with current Fields</h2>
+  <%end%>
+</div>
