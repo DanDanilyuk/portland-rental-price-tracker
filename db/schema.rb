@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20171003224120) do
   create_table "apartments_users", force: :cascade do |t|
     t.integer "apartment_id"
     t.integer "user_id"
+    t.integer "average_id"
   end
 
   create_table "averages", force: :cascade do |t|
