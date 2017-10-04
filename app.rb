@@ -1,5 +1,7 @@
 require 'bundler/setup'
 require 'open-uri'
+require 'pry'
+
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
@@ -62,26 +64,38 @@ def median_sqr(array)
   (med.sq_ft)
 end
 
+def count_ammenity(listing)
+	ammenity_count = 0
+	if listing.cat
+		ammenity_count +=1
+	end
+	if listing.dog
+		ammenity_count +=1
+	end
+	if listing.washer
+		ammenity_count +=1
+	end
+	if listing.smoke
+		ammenity_count +=1
+	end
+	if listing.garage
+		ammenity_count +=1
+	end
+	return ammenity_count
+end
+
 # pass in Apartment.where("price < #{@br1avg}, bed = '1', sqft > #{@br1sqr}").order(:price)
 def best_deal(array)
 	ammenity_count = 0
 	array.each do |listing|
-		if listing.cat
-			ammenity_count +=1
-		end
-		if listing.dog
-			ammenity_count +=1
-		end
-		if listing.washer
-			ammenity_count +=1
-		end
-		if listing.smoke
-			ammenity_count +=1
-		end
-		if listing.garage
-			ammenity_count +=1
-		end
+		ammenity_count = count_ammenity(listing)
 		if ammenity_count >= 3
+			return listing
+		end
+	end
+	array.each do |listing|
+		ammenity_count = count_ammenity(listing)
+		if ammenity_count >= 0
 			return listing
 		end
 	end
@@ -96,15 +110,31 @@ get '/' do
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
-	@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
-
-	@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
-
-	@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
-
-	@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
-
-	@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
+		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
+	else
+		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
+	end
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
+		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
+	else
+		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
+	end
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
+		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
+	else
+		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
+	end
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
+		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
+	else
+		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
+	end
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
+		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
+	else
+		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
+	end
   erb(:index)
 end
 
