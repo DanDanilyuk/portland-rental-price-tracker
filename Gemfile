@@ -7,6 +7,7 @@ gem("sinatra-activerecord")
 gem("rake")
 gem("nokogiri")
 gem("bcrypt")
+gem 'dynopoker'
 
 group(:test) do
   gem("shoulda-matchers", '~> 2.0')
