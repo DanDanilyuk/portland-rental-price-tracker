@@ -1,9 +1,138 @@
 
-.img {
-  height: 100px;
-  width: 100px;
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", sans-serif;
 }
 
-a:hover {
-  text-decoration: none;
+body, html {
+  height: 100%;
+  color: #777;
+  line-height: 1.8;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* First image */
+.bgimg-1 {
+  background-image: url(/img/background_img.jpg);
+  min-height: 100%;
+}
+
+/* Second image */
+.bgimg-2 {
+  background-image: url(/img/background_img6.jpg);
+  min-height: 400px;
+}
+
+/* Third image */
+.bgimg-3 {
+  background-image: url(/img/background_img8.jpg);
+  min-height: 400px;
+}
+
+.w3-wide {
+  letter-spacing: 10px;
+}
+
+.w3-hover-opacity {
+  cursor: pointer;
+}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+  .bgimg-1, .bgimg-2, .bgimg-3 {
+  background-attachment: scroll;
+  }
+  .img {
+    height: 100px;
+    width: 100px;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .carousel {
+    background: #2f4357;
+    margin-top: 20px;
+  }
+}
+
+#myCarousel img {
+  height: 800px;
+}
+
+.carousel .item img {
+  margin: 0 auto;
+  height: 100%;
+  width: 50px;
+}
+
+.bs-example {
+  margin: 20px;
+}
+
+.carousel-control.left {
+	background: none;
+}
+
+.carousel-control.right {
+	background: none;
+}
+
+.carousel-control {
+	position: absolute;
+	top: 45%;
+	bottom: 0;
+	left: 0;
+	width: 15%;
+	font-size: auto;
+	color: #fff;
+	text-align: center;
+	opacity: 1;
+	text-shadow: none;
+}
+
+.carousel-control:hover {
+	color: #000;
+}
+
+.carousel-indicators {
+	bottom: -50px;
+}
+
+.carousel-indicators li {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin: 1px;
+	text-indent: -999px;
+	cursor: pointer;
+	background-color: #000\9;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #16a085;
+	border-radius: 50%;
+}
+
+.carousel-indicators .active {
+	width: 12px;
+	height: 12px;
+	margin: 0;
+	background-color: #16a085;
+}
+
+.carousel-caption {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #fff;
+	text-align: center;
+	background: rgba(0,0,0,0.8);
 }
