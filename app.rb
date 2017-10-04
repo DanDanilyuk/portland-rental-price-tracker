@@ -139,7 +139,8 @@ post '/signup' do
   redirect("/user/#{user.id}")
 end
 
-get 'user/:id' do
+get '/user/:id' do
+	@user = User.find(params[:id])
   erb(:user)
 end
 
