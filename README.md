@@ -16,11 +16,11 @@ create an account by clicking the 'sign up' button in the top left, this will ta
 
 ![alt text](/public/img/signup.png)
 
-after you input a username, email, and password it will take you to your portfolio page which will then allow you to start saving custom searches.
+after you input a username, email, and password it will take you to your portfolio page
 
 ![alt text](/public/img/create_account.png)
 
-
+this will then allow you to start saving custom searches and view valuable data.
 
 ![alt text](/public/img/screen.png)
 
