@@ -37,9 +37,112 @@
     </div>
     </div>
   </header>
+  <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
 
-  <h1>GRAPH GO HERE</h1><br><br><br>
+  <div class="container">
+    <form action="/user" method="post">
+     <h1>Search Criteria:</h1>
+     <h3>Important: Leave a input blank if you do not wish to search by those parameters</h3>
 
+     <h4>Bedrooms:</h4>
+     <div class='form-group'>
+       <label>
+         <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
+       </label>
+       <% x = 1%>
+       <% while x < 9 do %>
+         <label>
+           <input type='checkbox' name='bed[]' value="<%= x %>"> <%= x %> Br
+         </label>
+         <% x += 1 %>
+       <% end %>
+     </div>
+     <h4>Bathrooms:</h4>
+     <div class='form-group'>
+       <label>
+         <input type="checkbox" onClick="toggle2(this)" /> Select All<br/>
+       </label>
+       <% j = 1%>
+       <% while j < 6 do %>
+         <label>
+           <input type='checkbox' name='bath[]' value="<%= j %>"> <%= j %> Bathroom
+         </label>
+         <% j += 1%>
+       <% end %>
+     </div>
+
+
+     <h4>Quadrant:</h4>
+     <div class='form-group'>
+       <label>
+         <input type="checkbox" onClick="toggle3(this)" /> Select All<br/>
+       </label>
+       <label>
+         <input type='checkbox' name='section[]' value="North Portland">  North Portland
+       </label>
+       <label>
+         <input type='checkbox' name='section[]' value="Northeast Portland">  Northeast Portland
+       </label>
+       <label>
+         <input type='checkbox' name='section[]' value="Northwest Portland">  Northwest Portland
+       </label>
+       <label>
+         <input type='checkbox' name='section[]' value="Southeast Portland">  Southeast Portland
+       </label>
+       <label>
+         <input type='checkbox' name='section[]' value="Southwest Portland">  Southwest Portland
+       </label>
+     </div>
+
+     <label for="sqft">Enter Min Sqare Feet</label>
+     <input type="number" name="sqft"><br>
+
+     <button type="submit">Search</button>
+    </form>
+
+
+
+
+    <% if @search.any? %>
+    <div style="text-align:center">
+      <h2>Number of Results: <%= @search.length %>
+      <h2>Average Rent: $<%= ave_rent(@search) %>
+      <h2>Median: $<%= median(@search) %>
+    </div>
+
+      <h2>Results:</h2>
+      <table class="table table-striped table-info">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Sqft</th>
+            <th>Bed</th>
+            <th>Bath</th>
+            <th>Location</th>
+            <th>Link</th>
+            <th>Posted</th>
+          </tr>
+        </thead>
+      </tbody>
+        <% @search.each do |result| %>
+          <tr>
+            <td><%= result.name %></td>
+            <td>$<%= result.price %></td>
+            <td><%= result.sqft %> ft<sup>2</sup></td>
+            <td><%= result.bed %></td>
+            <td><%= result.bath %></td>
+            <td><%= result.section %></td>
+            <td><a href="<%= result.url %>">Link</td>
+            <td><%= result.posted %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <%else%>
+      <h2>No Results with current Fields</h2>
+    <%end%>
+  </div>
 
   <h4>DATA DATA</h4>
   <!-- Compare bars /  -->
@@ -69,10 +172,27 @@ function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
     document.getElementById("myOverlay").style.display = "block";
 }
-
 function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("myOverlay").style.display = "none";
+}
+function toggle(source) {
+ checkboxes = document.getElementsByName('bed[]');
+ for(var i=0, n=checkboxes.length;i<n;i++) {
+   checkboxes[i].checked = source.checked;
+ }
+}
+function toggle2(source) {
+ checkboxes = document.getElementsByName('bath[]');
+ for(var i=0, n=checkboxes.length;i<n;i++) {
+   checkboxes[i].checked = source.checked;
+ }
+}
+function toggle3(source) {
+ checkboxes = document.getElementsByName('section[]');
+ for(var i=0, n=checkboxes.length;i<n;i++) {
+   checkboxes[i].checked = source.checked;
+ }
 }
 </script>
 

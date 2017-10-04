@@ -10,7 +10,6 @@ Dynopoker.configure do |config|
 end
 
 get '/update' do
-  #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
   apartments_north_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
@@ -78,7 +77,62 @@ get '/login' do
 end
 
 get '/user' do
+	@search = []
   erb(:user)
+end
+
+post '/user' do
+	if params['bed']
+		bed_search = ""
+		params['bed'].each do |bed|
+			bed_search += "bed = #{bed} or "
+		end
+		bed_search = bed_search[0..-5]
+	end
+
+	if params['bath']
+		bath_search = ""
+		params['bath'].each do |bath|
+			bath_search += "bath = #{bath} or "
+		end
+		bath_search = bath_search[0..-5]
+	end
+
+	if params['section']
+		section_search = ""
+		params['section'].each do |section|
+			section_search += "section = '#{section}' or "
+		end
+		section_search = section_search[0..-5]
+	end
+
+	combined_search = ""
+
+	if bed_search
+		combined_search += " " + "(" + bed_search + ") and"
+	end
+
+	if bath_search
+		combined_search += " " + "(" + bath_search + ") and"
+	end
+
+	if section_search
+		combined_search += " " + "(" + section_search + ") and"
+	end
+
+	if params['sqft'] != ''
+		sqft_search = " and sqft > #{params['sqft']}"
+	end
+
+	combined_search = combined_search[1..-5]
+
+	if combined_search && params['sqft'] != ''
+		combined_search += sqft_search
+	elsif params['sqft'] != ''
+		combined_search = "sqft > #{params['sqft']}"
+	end
+	@search = Apartment.where(combined_search).order(:price)
+	erb(:user)
 end
 
 get '/signup' do
@@ -111,58 +165,4 @@ end
 get '/search' do
 	@search = []
 	erb(:search)
-end
-
-post '/search' do
-
-
-
-
-	# populate search strings with text box input
-	if params['bed']
-		bed_search = ""
-		params['bed'].each do |bed|
-			bed_search += "bed = #{bed} or "
-		end
-		bed_search = bed_search[0..-5]
-	end
-
-	if params['bath']
-		bath_search = ""
-		params['bath'].each do |bath|
-			bath_search += "bath = #{bath} or "
-		end
-		bath_search = bath_search[0..-5]
-	end
-
-	if params['section']
-		section_search = ""
-		params['section'].each do |section|
-			section_search += "section = '#{section}' or "
-		end
-		section_search = section_search[0..-5]
-	end
-
-	combined_search = ""
-
-	if bed_search
-		combined_search += " " + "(" + bed_search + ") and"
-	end
-	if bath_search
-		combined_search += " " + "(" + bath_search + ") and"
-	end
-	if section_search
-		combined_search += " " + "(" + section_search + ") and"
-	end
-
-
-	combined_search = combined_search[1..-5]
-
-
- 	@search = Apartment.where(combined_search)
-
-
-  erb(:search)
-
-
 end
