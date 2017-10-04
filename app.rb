@@ -164,28 +164,7 @@ post '/search' do
 
   binding.pry
 
+  erb(:search)
 
-		# if keys.length != 0
-		# 	keys.each do |key|
-		# 		@apartments = Apartments.where("#{key} = ?")
-		# 	end
-		# end
-		# removes '' for any text input
-    # params.keys[0..-2].map do |x|
-    #     if params[:x] == ''
-    #         params.delete('x')
-    #     end
-    # end
-    if params != {}
-        params.keys
-		end
-    # Client.where("orders_count = ? AND locked = ?", params[:orders], false)
-
-    @apartments = Apartments.where(params)
-
-    instead of all one line
-    search each paramater adding to apartments each time
-    erb(:search)
-		test1 = Apartments.where("bed = 1 or bed = 2 or bed = 3 or bed = 4")
 
 end
