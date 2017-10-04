@@ -1,6 +1,5 @@
 require 'bundler/setup'
 require 'open-uri'
-require 'pry'
 
 
 Bundler.require(:default)
