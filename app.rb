@@ -134,3 +134,64 @@ end
 get 'user/:id' do
   erb(:user)
 end
+
+get '/search' do
+	erb(:search)
+end
+
+post '/search' do
+
+
+
+
+	# populate search strings with text box input
+	if params['bed']
+		bed_search = ""
+		params['bed'].each do |bed|
+			bed_search += "bed = #{bed} or "
+		end
+		bed_search = bed_search[0..-5]
+	end
+
+	if params['bath']
+		bath_search = ""
+		params['bath'].each do |bath|
+			bath_search += "bath = #{bath} or "
+		end
+		bath_search = bath_search[0..-5]
+	end
+
+	if params['section']
+		section_search = ""
+		params['section'].each do |section|
+			section_search += "section = '#{section}' or "
+		end
+		section_search = section_search[0..-5]
+	end
+
+	combined_search = ""
+
+	if bed_search
+		combined_search += " " + "(" + bed_search + ") and"
+	end
+	if bath_search
+		combined_search += " " + "(" + bath_search + ") and"
+	end
+	if section_search
+		combined_search += " " + "(" + section_search + ") and"
+	end
+
+
+	combined_search = combined_search[1..-5]
+
+	@apartments_by_bed = Apartment.where(bed_search)
+	@apartments_by_bath = Apartment.where(bath_search)
+	@apartments_by_section = Apartment.where(section_search)
+ 	@all = Apartment.where(combined_search)
+
+  binding.pry
+
+  erb(:search)
+
+
+end
