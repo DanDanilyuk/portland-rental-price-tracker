@@ -77,6 +77,7 @@ get '/login' do
 end
 
 get '/user' do
+	@all = []
 	@search = []
   erb(:user)
 end
@@ -132,6 +133,7 @@ post '/user' do
 		combined_search = "sqft > #{params['sqft']}"
 	end
 	@search = Apartment.where(combined_search).order(:price)
+	@all = Apartment.all
 	erb(:user)
 end
 

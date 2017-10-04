@@ -105,9 +105,9 @@
 
     <% if @search.any? %>
     <div style="text-align:center">
-      <h2>Number of Results: <%= @search.length %>
-      <h2>Average Rent: $<%= ave_rent(@search) %>
-      <h2>Median: $<%= median(@search) %>
+      <h2>Number of Results: <%= @search.length %> out of <%= @all.length %></h2>
+      <h2>Average Rent: $<%= ave_rent(@search) %></h2>
+      <h2>Median: $<%= median(@search) %></h2>
     </div>
 
       <h2>Results:</h2>
