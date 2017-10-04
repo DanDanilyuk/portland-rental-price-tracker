@@ -1,14 +1,7 @@
 class Apartment <ActiveRecord::Base
   has_and_belongs_to_many(:users)
 
-
-#zip codes:
-#North Portland 97217
-#Northeast Portland 97213
-#Northwest Portland 97229
-#Southeast Portland 97206
-#Southwest Portland 97221
-
+  
   def self.search_craigs(url, quadrant)
     apts = []
     html_data = open(url).read
