@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
-require 'pry'
+# require 'pry'
 
 
 Bundler.require(:default)
@@ -110,26 +110,31 @@ get '/' do
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
+	#north
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
 		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
 	else
 		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
 	end
+	#northeast
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
 		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
 	else
 		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
 	end
+	#northwest
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
 		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
 	else
 		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
 	end
+	#southwest
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
 		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
 	else
 		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
 	end
+	#southeast
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
 		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
 	else

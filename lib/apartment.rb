@@ -1,6 +1,6 @@
 class Apartment <ActiveRecord::Base
   has_and_belongs_to_many(:users)
-  
+
   def self.search_craigs(url, quadrant)
     apts = []
     html_data = open(url).read
@@ -12,7 +12,10 @@ class Apartment <ActiveRecord::Base
       title = nokogiri_object_title.xpath("//span[@id='titletextonly']")
       br = nokogiri_object_title.xpath("//span[@class='shared-line-bubble'][1]/b[1]").children.text.to_i
       bathroom = nokogiri_object_title.xpath("//span[@class='shared-line-bubble'][1]/b[2]").children.text.to_i
-      address_street = nokogiri_object_title.xpath("//div[@class='mapaddress']")
+      address_street = nokogiri_object_title.xpath("//div[@class='mapaddress']").children.text
+      if address_street == "" || address_street == " "
+        address_street = quadrant
+      end
       sqft = (nokogiri_object_title.xpath("//span[2]/b")).text.to_i
       price = (nokogiri_object_title.xpath("//span[@class='price']")).text.gsub!('$','').to_i
       date_posted = (nokogiri_object_title.xpath("//time")).text.split(' ')[0]
@@ -40,7 +43,7 @@ class Apartment <ActiveRecord::Base
         more_infos.push(info.text)
         end
       end
-      apts.push(name: (title.text),url: (link.value),price: (price),bed: (br),bath: (bathroom),sqft: (sqft),address: (address_street.children.text),cat: (cat_ok),dog: (dog_ok),washer: (washer_ok),smoke: (smoking_ok),garage: (garage_ok),description: (more_infos),posted: (date_posted),section: (quadrant))
+      apts.push(name: (title.text),url: (link.value),price: (price),bed: (br),bath: (bathroom),sqft: (sqft),address: (address_street),cat: (cat_ok),dog: (dog_ok),washer: (washer_ok),smoke: (smoking_ok),garage: (garage_ok),description: (more_infos),posted: (date_posted),section: (quadrant))
     end
     apts
   end
