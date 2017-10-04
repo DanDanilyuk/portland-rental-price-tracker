@@ -8,6 +8,7 @@ class CreateInitialTables < ActiveRecord::Migration[5.1]
     create_table(:apartments_users) do |t|
       t.column(:apartment_id, :integer)
       t.column(:user_id, :integer)
+      t.column(:average_id, :integer)
     end
     create_table(:apartments) do |t|
       t.column(:url, :string)
