@@ -125,8 +125,8 @@
 
   <!-- Container Best Listings by Region -->
   <div class="w3-content w3-container w3-padding-64" id="portfolio">
-    <h1 class="w3-center">REGIONS</h1>
-    <p class="w3-center"><em>lorem work ipsum tipsum.</em></p><br>
+    <h1 class="w3-center">THE BEST VALUE IN PORTLAND</h1>
+    <p class="w3-center"><em>(by area)</em></p><br>
 
     <!-- Responsive Grid. Carousel Jquery -->
 
@@ -146,40 +146,50 @@
           <div class="item active">
             <img src="/img/alberta.jpg" alt="alberta" style="width:100%;">
             <div class="carousel-caption">
-              <h1>Header of Slide 1</h1>
-              <h3>Details of Slide 1. Lorem Ipsum Blah Blah Blah....</h3>
+              <h1>Best one bedroom deal in Northeast Portland:</h1>
+              <h1><a href="<%=@best_deal_NE.url%>"><%=@best_deal_NE.address%></a></h1>
+              <h4><%=@best_deal_NE.name%></h4>
+              <h1>$<%=@best_deal_NE.price%></h1>
             </div>
           </div>
 
           <div class="item">
             <img src="/img/baghdad.jpg" alt="baghdad" style="width:100%;">
             <div class="carousel-caption">
-              <h1>Header of Slide 2</h1>
-              <h3>Details of Slide 2. Lorem Ipsum Blah Blah Blah....</h3>
+              <h1>Best one bedroom deal in Southeast Portland</h1>
+              <h1><a href="<%=@best_deal_SE.url%>"><%=@best_deal_SE.address%></a></h1>
+              <h4><%=@best_deal_SE.name%></h4>
+              <h1>$<%=@best_deal_SE.price%></h1>
             </div>
           </div>
 
           <div class="item">
             <img src="/img/cinema.jpg" alt="cinema" style="width:100%;">
             <div class="carousel-caption">
-              <h1>Header of Slide 3</h1>
-              <h3>Details of Slide 3. Lorem Ipsum Blah Blah Blah....</h3>
+              <h1>Best one bedroom deal in Northwest Portland</h1>
+              <h1><a href="<%=@best_deal_NW.url%>"><%=@best_deal_NW.address%></a></h1>
+              <h4><%=@best_deal_NW.name%></h4>
+              <h1>$<%=@best_deal_NW.price%></h1>
             </div>
           </div>
 
           <div class="item">
             <img src="/img/paul.jpg" alt="paul" style="width:100%;">
             <div class="carousel-caption">
-              <h1>Header of Slide 4</h1>
-              <h3>Details of Slide 4. Lorem Ipsum Blah Blah Blah....</h3>
+              <h1>Best one bedroom deal in North Portland</h1>
+              <h1><a href="<%=@best_deal_N.url%>"><%=@best_deal_N.address%></a></h1>
+              <h4><%=@best_deal_N.name%></h4>
+              <h1>$<%=@best_deal_N.price%></h1>
             </div>
           </div>
 
           <div class="item">
             <img src="/img/portland_sign.jpg" alt="Portland Sign" style="width:100%;">
             <div class="carousel-caption">
-              <h1>Header of Slide 5</h1>
-              <h3>Details of Slide 5. Lorem Ipsum Blah Blah Blah....</h3>
+              <h1>Best one bedroom deal in Southwest Portland</h1>
+              <h1><a href="<%=@best_deal_SW.url%>"><%=@best_deal_SW.address%></a></h1>
+              <h4><%=@best_deal_SW.name%></h4>
+              <h1>$<%=@best_deal_SW.price%></h1>
             </div>
           </div>
         </div>
