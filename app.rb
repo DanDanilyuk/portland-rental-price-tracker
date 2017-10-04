@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
-# require 'pry'
+require 'pry'
 
 
 Bundler.require(:default)
@@ -156,11 +156,15 @@ get '/signup' do
   erb(:signup)
 end
 
+get '/confirm' do
+	erb(:confirm)
+end
+
 post '/login' do
   email = params['email']
   password = params['password']
   user = User.find_by_email(email)
-  if user.password == password
+  if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id}")
   else
     erb(:login)
@@ -170,7 +174,27 @@ end
 post '/signup' do
   username = params['username']
   email = params['email']
-  password = BCrypt::Password.create(params['password'])
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
+  user = User.create({:username => username, :email => email, :password => password})
+  redirect("/user/#{user.id}")
+end
+
+post '/confirm' do
+  username = params['username']
+  email = params['email']
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
   user = User.create({:username => username, :email => email, :password => password})
   redirect("/user/#{user.id}")
 end
