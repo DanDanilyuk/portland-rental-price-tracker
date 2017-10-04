@@ -59,15 +59,41 @@ def median_sqr(array)
   (med.sq_ft)
 end
 
+#pass in Apartment.where("price < #{@br1avg}, bed = '1', sqft > #{@br1sqr}").order(:price)
+def best_deal_1br(array)
+	ammenity_count = 0
+	array.each do |listing|
+		if listing.cat
+			ammenity_count +=1
+		end
+		if listing.dog
+			ammenity_count +=1
+		end
+		if listing.washer
+			ammenity_count +=1
+		end
+		if listing.smoke
+			ammenity_count +=1
+		end
+		if listing.garage
+			ammenity_count +=1
+		end
+		if ammenity_count >= 3
+			return listing
+		end
+	end
+end
+
 get '/' do
   @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
   @br1med = median(Apartment.where("bed = '1'")).to_i
   @br1high = Apartment.where('bed = 1').order(:price)[-1].price
   @br1low = Apartment.where('bed = 1').order(:price)[0].price
+	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
-  
+	@best_deal_N = best_deal_1br(Apartment.where("price < #{@br1avg}, bed = '1', sqft > #{@br1sqr}, section = 'North Portland'").order(:price))
   erb(:index)
 end
 
