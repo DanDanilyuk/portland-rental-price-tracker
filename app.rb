@@ -51,7 +51,7 @@ end
 def ave_sqr(array)
   avg = 0
   array.each do |listing|
-    avg += listing.sq_ft
+    avg += listing.sqft
   end
   (avg / array.length)
 end
