@@ -59,11 +59,6 @@ end
 #   self * 100.0 /n
 # end
 
-var http = require("http");
-setInterval(function() {
-    http.get("https://portland-rent-tracker.herokuapp.com/update");
-}, 300000);
-
 get '/' do
   @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
   @br1med = median(Apartment.where("bed = '1'")).to_i
