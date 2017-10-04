@@ -14,7 +14,11 @@ go to: https://portland-rent-tracker.herokuapp.com/
 
 ![alt text](/public/img/signup.png)
 
-create an account by clicking the 'sign up' button in the top left, then start customizing your search!
+create an account by clicking the 'sign up' button in the top left, this will take you to the 'create account' page
+
+![alt text](/public/img/create_account.png)
+
+after you input a username, email, and password it will take you to your portfolio page which will then allow you to start saving custom searches.
 
 ![alt text](/public/img/screen.png)
 
