@@ -4,6 +4,10 @@ require 'open-uri'
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
+Dynopoker.configure do |config|
+	config.address = 'http://wakemydyno.com'
+end
+
 get '/update' do
   #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
