@@ -1,0 +1,78 @@
+<script>
+ function toggle(source) {
+   checkboxes = document.getElementsByName('bed[]');
+   for(var i=0, n=checkboxes.length;i<n;i++) {
+     checkboxes[i].checked = source.checked;
+   }
+ }
+ function toggle2(source) {
+   checkboxes = document.getElementsByName('bath[]');
+   for(var i=0, n=checkboxes.length;i<n;i++) {
+     checkboxes[i].checked = source.checked;
+   }
+ }
+ function toggle3(source) {
+   checkboxes = document.getElementsByName('section[]');
+   for(var i=0, n=checkboxes.length;i<n;i++) {
+     checkboxes[i].checked = source.checked;
+   }
+ }
+</script>
+
+
+<form action="/search" method="post">
+ <h1>Search Criteria:</h1>
+ <h2>Important: Leave a input black if you do not wish to search by those parameters</h2>
+
+ <h4>BedRooms:</h4>
+ <div class='form-group'>
+   <label>
+     <input type="checkbox" onClick="toggle(this)" /> Select All<br/>
+   </label>
+   <% x = 1%>
+   <% while x < 9 do %>
+     <label>
+       <input type='checkbox' name='bed[]' value="<%= x %>"> <%= x %> Br
+     </label>
+     <% x += 1 %>
+   <% end %>
+ </div>
+
+ <div class='form-group'>
+   <label>
+     <input type="checkbox" onClick="toggle2(this)" /> Select All<br/>
+   </label>
+   <% j = 1%>
+   <% while j < 6 do %>
+     <label>
+       <input type='checkbox' name='bath[]' value="<%= j %>"> <%= j %> Bathroom
+     </label>
+     <% j += 1%>
+   <% end %>
+ </div>
+
+
+
+ <div class='form-group'>
+   <label>
+     <input type="checkbox" onClick="toggle3(this)" /> Select All<br/>
+   </label>
+   <label>
+     <input type='checkbox' name='section[]' value="North Portland">North Portland
+   </label>
+   <label>
+     <input type='checkbox' name='section[]' value="Northeast Portland">Northeast Portland
+   </label>
+   <label>
+     <input type='checkbox' name='section[]' value="Northwest Portland">Northwest Portland
+   </label>
+   <label>
+     <input type='checkbox' name='section[]' value="Southeast Portland">Southeast Portland
+   </label>
+   <label>
+     <input type='checkbox' name='section[]' value="Southwest Portland">Southwest Portland
+   </label>
+ </div>
+
+ <button type="submit">Search</button>
+</form>

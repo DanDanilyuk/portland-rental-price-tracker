@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
+require 'pry'
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
@@ -71,7 +72,7 @@ get '/' do
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
-  
+
   erb(:index)
 end
 
@@ -109,4 +110,32 @@ end
 
 get 'user/:id' do
   erb(:user)
+end
+
+get '/search' do
+	erb(:search)
+end
+
+post '/search' do
+    binding.pry
+		keys = params.keys[0..-2]
+
+		if keys.length != 0
+			keys.each 
+		@apartments = Apartments.where()
+		# removes '' for any text input
+    # params.keys[0..-2].map do |x|
+    #     if params[:x] == ''
+    #         params.delete('x')
+    #     end
+    # end
+    if params != {}
+        params.keys
+		end
+    Client.where("orders_count = ? AND locked = ?", params[:orders], false)
+
+    @apartments = Apartments.where(params)
+    instead of all one line
+    search each paramater adding to apartments each time
+    erb(:search)
 end
