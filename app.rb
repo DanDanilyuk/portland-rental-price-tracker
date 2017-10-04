@@ -5,7 +5,7 @@ Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
 Dynopoker.configure do |config|
-	config.address = 'http://wakemydyno.com'
+	config.address = 'https://portland-rent-tracker.herokuapp.com/update'
 end
 
 get '/update' do
