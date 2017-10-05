@@ -30,4 +30,4 @@ Database diagram
 
 ![alt text](/public/img/rent-tracker-sql-diagram.png)
 
-copyright Nate McGregor, Keegan Ruebling, Mark Helt, Dan Danilyuk 2017
+copyright Nate McGregor, Keegan Ruebling, Mark Helt, Dan Danilyuk © 2017
