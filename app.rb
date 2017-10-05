@@ -51,6 +51,50 @@ get '/' do
   erb(:index)
 end
 
+get '/:id' do
+	id = (params[:id]).to_i/793
+	@user = User.find(id)
+	@br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
+  @br1med = median(Apartment.where("bed = '1'")).to_i
+  @br1high = Apartment.where('bed = 1').order(:price)[-1].price
+  @br1low = Apartment.where('bed = 1').order(:price)[0].price
+	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
+  @avg_percent = (@br1avg * 100.0 /@br1high).floor
+  @med_percent = (@br1med * 100.0 /@br1high).floor
+  @low_percent = (@br1low * 100.0 /@br1high).floor
+	#north
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
+		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
+	else
+		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
+	end
+	#northeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
+		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
+	else
+		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
+	end
+	#northwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
+		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
+	else
+		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
+	end
+	#southwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
+		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
+	else
+		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
+	end
+	#southeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
+		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
+	else
+		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
+	end
+	redirect("/index/#{user.id * 793}")
+end
+
 get '/login' do
   erb(:login)
 end
