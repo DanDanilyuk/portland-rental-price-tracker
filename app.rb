@@ -60,21 +60,23 @@ post '/login' do
   password = params['password']
   user = User.find_by_email(email)
   if BCrypt::Password.new(user.password) == password
-    redirect("/user/#{user.id}")
+    redirect("/user/#{user.id * 793}")
   else
     erb(:login)
   end
 end
 
 get '/user/:id' do
+	id = (params[:id]).to_i/793
 	@all = []
 	@search = []
-	@user = User.find(params[:id])
+	@user = User.find_by_id(id)
   erb(:user)
 end
 
 post '/user/:id' do
-	@user = User.find(params[:id])
+	id = (params[:id]).to_i/793
+	@user = User.find_by_id(id)
 	if params['bed']
 		bed_search = ""
 		params['bed'].each do |bed|
@@ -148,7 +150,7 @@ post '/signup' do
 		redirect("/confirm")
 	end
   user = User.create({:username => username, :email => email, :password => password})
-  redirect("/user/#{user.id}")
+  redirect("/user/#{user.id * 793}")
 end
 
 post '/confirm' do
@@ -161,8 +163,8 @@ post '/confirm' do
 	else
 		redirect("/confirm")
 	end
-  user = User.create({:username => username, :email => email, :password => password})
-  redirect("/user/#{user.id}")
+	user = User.create({:username => username, :email => email, :password => password})
+  redirect("/user/#{user.id * 793}")
 end
 
 get '/update' do
