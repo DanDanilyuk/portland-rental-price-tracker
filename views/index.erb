@@ -16,18 +16,32 @@
       <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
         <i class="fa fa-bars"></i>
       </a>
-      <a href="/" class="w3-bar-item w3-button">HOME</a>
-      <a href="#value" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> VALUE</a>
-      <a href="/signup" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-id-card"></i> SIGN UP</a>
-      <a href="/login" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-in"></i> LOG IN</a>
-    </div>
+      <% if @user == nil%>
+        <a href="/" class="w3-bar-item w3-button">HOME</a>
+        <a href="#value" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> VALUE</a>
+        <a href="/signup" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-id-card"></i> SIGN UP</a>
+        <a href="/login" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-in"></i> LOG IN</a>
+      <%else%>
+        <a href="#value" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> VALUE</a>
+        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i><%=@user.username%></a>
+        <a href="/signout" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-out"></i> SIGN OUT</a>
+      <%end%>
+      </div>
 
     <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-      <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">VALUE</a>
-      <a href="/signup" class="w3-bar-item w3-button" onclick="toggleFunction()">SIGN UP</a>
-      <a href="/login" class="w3-bar-item w3-button" onclick="toggleFunction()">LOG IN</a>
-    </div>
+    <% if @user == nil%>
+      <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+        <a href="#value" class="w3-bar-item w3-button" onclick="toggleFunction()">VALUE</a>
+        <a href="/signup" class="w3-bar-item w3-button" onclick="toggleFunction()">SIGN UP</a>
+        <a href="/login" class="w3-bar-item w3-button" onclick="toggleFunction()">LOG IN</a>
+      </div>
+    <%else%>
+      <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+        <a href="#value" class="w3-bar-item w3-button" onclick="toggleFunction()">VALUE</a>
+        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button" onclick="toggleFunction()"><%=@user.username%></a>
+        <a href="/signout" class="w3-bar-item w3-button" onclick="toggleFunction()">SIGN OUT</a>
+      </div>
+    <%end%>
   </div>
 
   <!-- First Parallax Image with Logo Text -->

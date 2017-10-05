@@ -10,6 +10,7 @@ Dynopoker.configure do |config|
 end
 
 get '/' do
+	@user = nil
   @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
   @br1med = median(Apartment.where("bed = '1'")).to_i
   @br1high = Apartment.where('bed = 1').order(:price)[-1].price
@@ -51,7 +52,7 @@ get '/' do
   erb(:index)
 end
 
-get '/:id' do
+get '/index/:id' do
 	id = (params[:id]).to_i/793
 	@user = User.find(id)
 	@br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
@@ -92,7 +93,22 @@ get '/:id' do
 	else
 		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
 	end
-	redirect("/index/#{user.id * 793}")
+	erb(:index)
+end
+
+get '/signout' do
+	erb(:signout)
+end
+
+post '/signout' do
+  email = params['email']
+  password = params['password']
+  user = User.find_by_email(email)
+  if BCrypt::Password.new(user.password) == password
+    redirect("/user/#{user.id * 793}")
+  else
+    erb(:login)
+  end
 end
 
 get '/login' do
