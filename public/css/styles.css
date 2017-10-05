@@ -65,6 +65,10 @@ body, html {
   height: 800px;
 }
 
+.carousel {
+  font-family:'Quicksand'; font-size: 20px;
+}
+
 .carousel .item img {
   margin: 0 auto;
   height: 100%;
