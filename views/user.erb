@@ -6,7 +6,6 @@
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <img src="/w3images/avatar_g2.jpg" style="width:45%;" class="w3-round"><br><br>
     <h4><b>PORTFOLIO</b></h4>
     <p class="w3-text-grey"><%= @user.username%></p>
   </div>
@@ -139,7 +138,7 @@
     </div>
 
       <h2>Results:</h2>
-      <table class="table table-striped table-info">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th>Title</th>
@@ -173,7 +172,7 @@
             <td>
               <form action="/save/<%= result.id %>" method="post">
                 <input type="hidden" name="user_id" value="<%= @user.id %>">
-                <button type="submit">Save</button>
+                <button type="submit" class="w3-button w3-white w3-border w3-round">+</button>
               </form>
             </td>
           </tr>

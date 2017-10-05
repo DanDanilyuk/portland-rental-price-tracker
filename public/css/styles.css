@@ -14,8 +14,20 @@ body, html {
   width: 100%;
 }
 
+.w3-main {
+  background-color: #e9ebef;
+}
+
+#mySidebar {
+  background-color: #828284;
+}
+
+.table {
+  background-color: #bcdadf;
+}
+
 .fa {
-  color: blue;
+  color: #828284;
 }
 
 /* Create a Parallax Effect */
