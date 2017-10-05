@@ -6,24 +6,45 @@
 <style>
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
-.bgimg {
+  .bgimg {
     background-image: url(/img/background_img4.jpg);
     min-height: 100%;
     background-position: center;
     background-size: cover;
-    opacity: 0.8;
-}
+    opacity: 0.9;
+  }
 </style>
 <body>
 
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <section id="feat">
+        <div class="container">
+            <div class="row features">
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="100ms">
+                  <h1><i class="fa fa-usd"></i></h1>
+                  <h4>Portland</h4>
+                  <p>continues to be the 15th most expensive rental market in the nation.</p>
+                </div>
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="300ms">
+                    <h1><i class="fa fa-home"></i></h1>
+                    <h4>Portland</h4>
+                    <p>currently has a 91% approval rate for renters.</p>
+                </div>
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="500ms">
+                    <h1><i class="fa fa-sign-in"></i></h1>
+                    <h4>Oregon</h4>
+                    <p>was the most popular state to move to last year. A quarter of those people came from California.</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="w3-display-topleft w3-padding-large w3-xlarge">
       <a href="/" class="w3-bar-item w3-button">HOME</a>
     </div>
     <div class="w3-display-middle">
-      <h1 class="w3-jumbo w3-animate-top">CREATE ACCOUNT</h1>
-      <p>passwords didn't match!</p>
-      <form action='/signup' method="post">
+      <h1 class="w3-jumbo w3-animate-top">SIGN UP</h1>
+      <p>Passwords didn't match!</p>
+      <form action='/confirm' method="post">
         <div class="form-group">
           <input id="username" name="username" class="form-control" type="text" placeholder="Username" required><br>
           <input id="email" name="email" class="form-control" type="text" placeholder="Email" required><br>
@@ -32,9 +53,6 @@ body, html {height: 100%}
           <button type="submit" class="btn btn-info">Sign Up</button>
         </div>
       </form>
-    </div>
-    <div class="w3-display-topright w3-padding-large">
-      SIGN UP
     </div>
   </div>
 
