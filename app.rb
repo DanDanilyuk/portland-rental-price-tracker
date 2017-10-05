@@ -291,9 +291,9 @@ get '/update' do
 
   apartments_north_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
+  apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_northeast_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=1&postal=97212&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
+  apartments_northeast_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=1&postal=97212&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 
   apartments_northeast_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=1.9&postal=97211&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 
