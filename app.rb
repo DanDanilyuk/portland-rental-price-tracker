@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
-require 'pry'
+
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
@@ -10,18 +10,22 @@ Dynopoker.configure do |config|
 end
 
 get '/update' do
+  #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
-  apartments_north_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_northeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97213&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
+  apartments_north_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_northwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97229&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northwest Portland")
+  apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_southeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97206&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southeast Portland")
+  apartments_northeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=3&postal=97213&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 
-  apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97221&min_price=499&max_price=8001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
+  apartments_northwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97229&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northwest Portland")
 
-  all_quadrants = apartments_north_portland + apartments_northeast_portland + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
+  apartments_southeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=3.5&postal=97206&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southeast Portland")
+
+  apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=3.5&postal=97221&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
+
+  all_quadrants = apartments_north_portland1 + apartments_north_portland2 + apartments_northeast_portland + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
   all_quadrants.each do |x|
     if Apartment.exists?({:name => x[:name],:address => x[:address],:price => x[:price]}) == false
 
@@ -49,7 +53,7 @@ end
 def ave_sqr(array)
   avg = 0
   array.each do |listing|
-    avg += listing.sq_ft
+    avg += listing.sqft
   end
   (avg / array.length)
 end
@@ -59,15 +63,82 @@ def median_sqr(array)
   (med.sq_ft)
 end
 
+def count_ammenity(listing)
+	ammenity_count = 0
+	if listing.cat
+		ammenity_count +=1
+	end
+	if listing.dog
+		ammenity_count +=1
+	end
+	if listing.washer
+		ammenity_count +=1
+	end
+	if listing.smoke
+		ammenity_count +=1
+	end
+	if listing.garage
+		ammenity_count +=1
+	end
+	return ammenity_count
+end
+
+# pass in Apartment.where("price < #{@br1avg}, bed = '1', sqft > #{@br1sqr}").order(:price)
+def best_deal(array)
+	ammenity_count = 0
+	array.each do |listing|
+		ammenity_count = count_ammenity(listing)
+		if ammenity_count >= 3
+			return listing
+		end
+	end
+	array.each do |listing|
+		ammenity_count = count_ammenity(listing)
+		if ammenity_count >= 0
+			return listing
+		end
+	end
+end
+
 get '/' do
   @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
   @br1med = median(Apartment.where("bed = '1'")).to_i
   @br1high = Apartment.where('bed = 1').order(:price)[-1].price
   @br1low = Apartment.where('bed = 1').order(:price)[0].price
+	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
-
+	#north
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
+		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
+	else
+		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
+	end
+	#northeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
+		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
+	else
+		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
+	end
+	#northwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
+		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
+	else
+		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
+	end
+	#southwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
+		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
+	else
+		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
+	end
+	#southeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
+		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
+	else
+		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
+	end
   erb(:index)
 end
 
@@ -141,11 +212,15 @@ get '/signup' do
   erb(:signup)
 end
 
+get '/confirm' do
+	erb(:confirm)
+end
+
 post '/login' do
   email = params['email']
   password = params['password']
   user = User.find_by_email(email)
-  if user.password == password
+  if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id}")
   else
     erb(:login)
@@ -155,16 +230,32 @@ end
 post '/signup' do
   username = params['username']
   email = params['email']
-  password = BCrypt::Password.create(params['password'])
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
   user = User.create({:username => username, :email => email, :password => password})
   redirect("/user/#{user.id}")
 end
 
-get 'user/:id' do
-  erb(:user)
+post '/confirm' do
+  username = params['username']
+  email = params['email']
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
+  user = User.create({:username => username, :email => email, :password => password})
+  redirect("/user/#{user.id}")
 end
 
-get '/search' do
-	@search = []
-	erb(:search)
+get '/user/:id' do
+	@user = User.find(params[:id])
+  erb(:user)
 end
