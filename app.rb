@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
-
+require 'pry'
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
@@ -294,6 +294,19 @@ get '/update' do
     end
   end
 redirect '/'
+end
+
+post ('/save/:id') do
+	@user = User.find(params['user_id'])
+	apartment = Apartment.find(params[:id])
+	@user.apartments.push(apartment)
+	redirect "/user/#{@user.id * 793}"
+end
+
+post ('/delete/:id') do
+	@user = User.find(params[:id])
+	@user.apartments.delete_all
+	redirect "/user/#{@user.id * 793}"
 end
 
 def ave_rent(array)
