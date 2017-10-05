@@ -153,7 +153,8 @@ get '/user' do
   erb(:user)
 end
 
-post '/user' do
+post '/user/:id' do
+	@user = User.find(params[:id])
 	if params['bed']
 		bed_search = ""
 		params['bed'].each do |bed|
@@ -256,6 +257,8 @@ post '/confirm' do
 end
 
 get '/user/:id' do
+	@all = []
+	@search = []
 	@user = User.find(params[:id])
   erb(:user)
 end
