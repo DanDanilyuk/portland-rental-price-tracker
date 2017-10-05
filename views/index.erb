@@ -24,7 +24,7 @@
         <a href="/login" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-in"></i> LOG IN</a>
       <%else%>
         <a href="#value" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> VALUE</a>
-        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i><%=@user.username%></a>
+        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> <%=@user.username%></a>
         <a href="/signout" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-out"></i> SIGN OUT</a>
       <%end%>
       </div>
@@ -39,7 +39,7 @@
     <%else%>
       <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
         <a href="#value" class="w3-bar-item w3-button" onclick="toggleFunction()">VALUE</a>
-        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button" onclick="toggleFunction()"><%=@user.username%></a>
+        <a href="/user/<%=@user.id*793%>" class="w3-bar-item w3-button" onclick="toggleFunction()"> <%=@user.username%></a>
         <a href="/signout" class="w3-bar-item w3-button" onclick="toggleFunction()">SIGN OUT</a>
       </div>
     <%end%>
