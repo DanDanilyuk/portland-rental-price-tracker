@@ -127,7 +127,7 @@
           <tr>
             <th>Title</th>
             <th>Price</th>
-            <th>Sqft</th>
+            <th>Feet<sup>2</sup></th>
             <th>Bed</th>
             <th>Bath</th>
             <th>Location</th>
@@ -139,9 +139,15 @@
       </tbody>
         <% @search.each do |result| %>
           <tr>
-            <td><%= result.name %></td>
+            <td>
+            <% if result.name.length > 47 %>
+              <%= result.name[0..47] + "..."%>
+            <% else %>
+              <%= result.name %>
+            <% end %>
+            </td>
             <td>$<%= result.price %></td>
-            <td><%= result.sqft %> ft<sup>2</sup></td>
+            <td><%= result.sqft %></td>
             <td><%= result.bed %></td>
             <td><%= result.bath %></td>
             <td><%= result.section %></td>
