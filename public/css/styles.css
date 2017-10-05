@@ -9,6 +9,11 @@ body, html {
   line-height: 1.8;
 }
 
+#map {
+  height: 400px;
+  width: 100%;
+}
+
 /* Create a Parallax Effect */
 .bgimg-1, .bgimg-2, .bgimg-3 {
   background-attachment: fixed;
@@ -63,6 +68,10 @@ body, html {
 
 #myCarousel img {
   height: 800px;
+}
+
+.carousel {
+  font-family:'Quicksand'; font-size: 20px;
 }
 
 .carousel .item img {
