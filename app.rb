@@ -229,7 +229,7 @@ post '/user/:id' do
 	elsif params['sqft'] != ''
 		combined_search = "sqft > #{params['sqft']}"
 	end
-	@search = Apartment.where(combined_search).order(:price)
+	@search = Apartment.where(combined_search).order(params['sort'])
 	@all = Apartment.all
 	erb(:user)
 end
