@@ -41,6 +41,20 @@
           x.className = x.className.replace(" w3-show", "");
       }
     }
+    function initMap() {
+        var uluru = {lat: 45.521189, lng: -122.677424};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjBr813KHf5P4rG18b1eWfu5HtCUjVJbI&callback=initMap">
     </script>
   </body>
 </html>
