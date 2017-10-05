@@ -9,6 +9,162 @@ Dynopoker.configure do |config|
 	config.address = 'https://portland-rent-tracker.herokuapp.com/update'
 end
 
+get '/' do
+  @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
+  @br1med = median(Apartment.where("bed = '1'")).to_i
+  @br1high = Apartment.where('bed = 1').order(:price)[-1].price
+  @br1low = Apartment.where('bed = 1').order(:price)[0].price
+	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
+  @avg_percent = (@br1avg * 100.0 /@br1high).floor
+  @med_percent = (@br1med * 100.0 /@br1high).floor
+  @low_percent = (@br1low * 100.0 /@br1high).floor
+	#north
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
+		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
+	else
+		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
+	end
+	#northeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
+		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
+	else
+		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
+	end
+	#northwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
+		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
+	else
+		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
+	end
+	#southwest
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
+		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
+	else
+		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
+	end
+	#southeast
+	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
+		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
+	else
+		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
+	end
+  erb(:index)
+end
+
+get '/login' do
+  erb(:login)
+end
+
+post '/login' do
+  email = params['email']
+  password = params['password']
+  user = User.find_by_email(email)
+  if BCrypt::Password.new(user.password) == password
+    redirect("/user/#{user.id}")
+  else
+    erb(:login)
+  end
+end
+
+get '/user/:id' do
+	@all = []
+	@search = []
+	@user = User.find(params[:id])
+  erb(:user)
+end
+
+post '/user/:id' do
+	@user = User.find(params[:id])
+	if params['bed']
+		bed_search = ""
+		params['bed'].each do |bed|
+			bed_search += "bed = #{bed} or "
+		end
+		bed_search = bed_search[0..-5]
+	end
+
+	if params['bath']
+		bath_search = ""
+		params['bath'].each do |bath|
+			bath_search += "bath = #{bath} or "
+		end
+		bath_search = bath_search[0..-5]
+	end
+
+	if params['section']
+		section_search = ""
+		params['section'].each do |section|
+			section_search += "section = '#{section}' or "
+		end
+		section_search = section_search[0..-5]
+	end
+
+	combined_search = ""
+
+	if bed_search
+		combined_search += " " + "(" + bed_search + ") and"
+	end
+
+	if bath_search
+		combined_search += " " + "(" + bath_search + ") and"
+	end
+
+	if section_search
+		combined_search += " " + "(" + section_search + ") and"
+	end
+
+	if params['sqft'] != ''
+		sqft_search = " and sqft > #{params['sqft']}"
+	end
+
+	combined_search = combined_search[1..-5]
+
+	if combined_search && params['sqft'] != ''
+		combined_search += sqft_search
+	elsif params['sqft'] != ''
+		combined_search = "sqft > #{params['sqft']}"
+	end
+	@search = Apartment.where(combined_search).order(:price)
+	@all = Apartment.all
+	erb(:user)
+end
+
+get '/confirm' do
+	erb(:confirm)
+end
+
+get '/signup' do
+  erb(:signup)
+end
+
+post '/signup' do
+  username = params['username']
+  email = params['email']
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
+  user = User.create({:username => username, :email => email, :password => password})
+  redirect("/user/#{user.id}")
+end
+
+post '/confirm' do
+  username = params['username']
+  email = params['email']
+	password = params['password']
+	confirm_pass = params['confirm_pass']
+	if password == confirm_pass
+  	password = BCrypt::Password.create(password)
+	else
+		redirect("/confirm")
+	end
+  user = User.create({:username => username, :email => email, :password => password})
+  redirect("/user/#{user.id}")
+end
+
 get '/update' do
   #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
@@ -98,167 +254,4 @@ def best_deal(array)
 			return listing
 		end
 	end
-end
-
-get '/' do
-  @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
-  @br1med = median(Apartment.where("bed = '1'")).to_i
-  @br1high = Apartment.where('bed = 1').order(:price)[-1].price
-  @br1low = Apartment.where('bed = 1').order(:price)[0].price
-	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
-  @avg_percent = (@br1avg * 100.0 /@br1high).floor
-  @med_percent = (@br1med * 100.0 /@br1high).floor
-  @low_percent = (@br1low * 100.0 /@br1high).floor
-	#north
-	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
-		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
-	else
-		@best_deal_N = Apartment.where("bed = 1 and section = 'North Portland'").order(:price)[0]
-	end
-	#northeast
-	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").exists?
-		@best_deal_NE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northeast Portland'").order(:price))
-	else
-		@best_deal_NE = Apartment.where("bed = 1 and section = 'Northeast Portland'").order(:price)[0]
-	end
-	#northwest
-	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").exists?
-		@best_deal_NW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Northwest Portland'").order(:price))
-	else
-		@best_deal_NW = Apartment.where("bed = 1 and section = 'Northwest Portland'").order(:price)[0]
-	end
-	#southwest
-	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").exists?
-		@best_deal_SW = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southwest Portland'").order(:price))
-	else
-		@best_deal_SW = Apartment.where("bed = 1 and section = 'Southwest Portland'").order(:price)[0]
-	end
-	#southeast
-	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").exists?
-		@best_deal_SE = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'Southeast Portland'").order(:price))
-	else
-		@best_deal_SE = Apartment.where("bed = 1 and section = 'Southeast Portland'").order(:price)[0]
-	end
-  erb(:index)
-end
-
-
-get '/login' do
-  erb(:login)
-end
-
-get '/user' do
-	@all = []
-	@search = []
-  erb(:user)
-end
-
-post '/user/:id' do
-	@user = User.find(params[:id])
-	if params['bed']
-		bed_search = ""
-		params['bed'].each do |bed|
-			bed_search += "bed = #{bed} or "
-		end
-		bed_search = bed_search[0..-5]
-	end
-
-	if params['bath']
-		bath_search = ""
-		params['bath'].each do |bath|
-			bath_search += "bath = #{bath} or "
-		end
-		bath_search = bath_search[0..-5]
-	end
-
-	if params['section']
-		section_search = ""
-		params['section'].each do |section|
-			section_search += "section = '#{section}' or "
-		end
-		section_search = section_search[0..-5]
-	end
-
-	combined_search = ""
-
-	if bed_search
-		combined_search += " " + "(" + bed_search + ") and"
-	end
-
-	if bath_search
-		combined_search += " " + "(" + bath_search + ") and"
-	end
-
-	if section_search
-		combined_search += " " + "(" + section_search + ") and"
-	end
-
-	if params['sqft'] != ''
-		sqft_search = " and sqft > #{params['sqft']}"
-	end
-
-	combined_search = combined_search[1..-5]
-
-	if combined_search && params['sqft'] != ''
-		combined_search += sqft_search
-	elsif params['sqft'] != ''
-		combined_search = "sqft > #{params['sqft']}"
-	end
-	@search = Apartment.where(combined_search).order(:price)
-	@all = Apartment.all
-	erb(:user)
-end
-
-get '/signup' do
-  erb(:signup)
-end
-
-get '/confirm' do
-	erb(:confirm)
-end
-
-post '/login' do
-  email = params['email']
-  password = params['password']
-  user = User.find_by_email(email)
-  if BCrypt::Password.new(user.password) == password
-    redirect("/user/#{user.id}")
-  else
-    erb(:login)
-  end
-end
-
-post '/signup' do
-  username = params['username']
-  email = params['email']
-	password = params['password']
-	confirm_pass = params['confirm_pass']
-	if password == confirm_pass
-  	password = BCrypt::Password.create(password)
-	else
-		redirect("/confirm")
-	end
-  user = User.create({:username => username, :email => email, :password => password})
-  redirect("/user/#{user.id}")
-end
-
-post '/confirm' do
-  username = params['username']
-  email = params['email']
-	password = params['password']
-	confirm_pass = params['confirm_pass']
-	if password == confirm_pass
-  	password = BCrypt::Password.create(password)
-	else
-		redirect("/confirm")
-	end
-  user = User.create({:username => username, :email => email, :password => password})
-  redirect("/user/#{user.id}")
-end
-
-get '/user/:id' do
-	@all = []
-	@search = []
-	@user = User.find(params[:id])
-  erb(:user)
 end
