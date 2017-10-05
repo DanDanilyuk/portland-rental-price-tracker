@@ -149,3 +149,6 @@ body, html {
 	text-align: center;
 	background: rgba(0,0,0,0.8);
 }
+#shift {
+  margin-left: 25px;
+}

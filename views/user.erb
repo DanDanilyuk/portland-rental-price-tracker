@@ -13,6 +13,17 @@
   <div class="w3-bar-block">
     <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>PORTFOLIO</a>
     <a href='/index/<%=@user.id*793%>' onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>Home</a>
+    <!-- start of saved searches if there -->
+    <% if @user.apartments.any? %>
+      <ol>
+      <% @user.apartments.each do |apartment| %>
+        <li><a href="<%= apartment.url %>"><%= apartment.name %></a>
+      <% end %>
+      </ol>
+      <form id='shift' action="/delete/<%= @user.id %> " method="post">
+        <button class='w3-button w3-black'type="submit">Delete</button>
+      </form>
+    <% end %>
   </div>
 </nav>
 
@@ -37,10 +48,12 @@
     </div>
     </div>
   </header>
-  <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+
 
   <div class="container">
-    <form action="/user/<%= @user.id %>" method="post">
+
+    <form action="/user/<%= @user.id * 793 %>" method="post">
+
      <h1>Search Criteria:</h1>
      <h3>Important: Leave a input blank if you do not wish to search by those parameters</h3>
 
@@ -96,7 +109,7 @@
 
      <label for="sqft">Enter Min Sqare Feet</label>
      <input type="number" name="sqft"><br>
-      
+
      <h4>Sort By:</h4>
      <div>
       <input type="radio" name="sort" value="price" checked>
@@ -131,25 +144,38 @@
           <tr>
             <th>Title</th>
             <th>Price</th>
-            <th>Sqft</th>
+            <th>Feet<sup>2</sup></th>
             <th>Bed</th>
             <th>Bath</th>
             <th>Location</th>
             <th>Link</th>
             <th>Posted</th>
+            <th>Save</th>
           </tr>
         </thead>
       </tbody>
         <% @search.each do |result| %>
           <tr>
-            <td><%= result.name %></td>
+            <td>
+            <% if result.name.length > 47 %>
+              <%= result.name[0..47] + "..."%>
+            <% else %>
+              <%= result.name %>
+            <% end %>
+            </td>
             <td>$<%= result.price %></td>
-            <td><%= result.sqft %> ft<sup>2</sup></td>
+            <td><%= result.sqft %></td>
             <td><%= result.bed %></td>
             <td><%= result.bath %></td>
             <td><%= result.section %></td>
             <td><a href="<%= result.url %>">Link</td>
             <td><%= result.posted %></td>
+            <td>
+              <form action="/save/<%= result.id %>" method="post">
+                <input type="hidden" name="user_id" value="<%= @user.id %>">
+                <button type="submit">Save</button>
+              </form>
+            </td>
           </tr>
         <% end %>
         </tbody>
@@ -158,25 +184,6 @@
       <h2>No Results with current Fields</h2>
     <%end%>
   </div>
-
-  <h4>DATA DATA</h4>
-  <!-- Compare bars /  -->
-  <p>COMPARE DATA</p>
-  <div class="w3-grey">
-    <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:95%">95%</div>
-  </div><br>
-  <p>COMPARE DATA</p>
-  <div class="w3-grey">
-    <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:85%">85%</div>
-  </div><br>
-  <p>COMPARE DATA</p>
-  <div class="w3-grey">
-    <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:80%">80%</div>
-  </div>
-
-  <hr>
-
-<h1>INPUT FIELDS</h1>
 
 <!-- End page content -->
 </div>
