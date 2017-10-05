@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'open-uri'
-
+require 'pry'
 
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
@@ -289,6 +289,13 @@ get '/update' do
   #Southwest Portland 97221
   # def self.search_craigs(url, quadrant)
 
+	apartments = Apartment.all
+	apartments.each do |x|
+		if x.name == ''
+			x.delete
+		end
+	end
+	
   apartments_north_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
   apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
@@ -312,6 +319,9 @@ get '/update' do
       Apartment.create({:name => x[:name], :url => x[:url], :price => x[:price], :bed => x[:bed], :bath => x[:bath], :sqft => x[:sqft], :address => x[:address], :cat => x[:cat], :dog => x[:dog], :washer => x[:washer], :smoke => x[:smoke], :garage => x[:garage], :description => x[:description], :section => x[:section], :posted => x[:posted]})
     end
   end
+
+
+
 redirect '/'
 end
 
