@@ -2,7 +2,7 @@ Portland Rent Tracker
 =====================
 
 Authors:
-Nate McGregor, Keegan Reubling, Mark Helt, Dan Danilyuk
+Nate McGregor, Keegan Ruebling, Mark Helt, Dan Danilyuk
 
 Description:
 ------------
@@ -30,4 +30,4 @@ Database diagram
 
 ![alt text](/public/img/rent-tracker-sql-diagram.png)
 
-copyright Nate McGregor, Keegan Reubling, Mark Helt, Dan Danilyuk 2017
+copyright Nate McGregor, Keegan Ruebling, Mark Helt, Dan Danilyuk 2017
