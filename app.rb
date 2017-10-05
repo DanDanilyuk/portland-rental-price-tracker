@@ -19,6 +19,28 @@ get '/' do
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
+
+	@br2avg = ave_rent(Apartment.where("bed = '2'")).to_i
+  @br2med = median(Apartment.where("bed = 2")).to_i
+  @br2high = Apartment.where('bed = 2').order(:price)[-1].price
+  @br2low = Apartment.where('bed = 2').order(:price)[0].price
+
+	@br3avg = ave_rent(Apartment.where("bed = '3'")).to_i
+  @br3med = median(Apartment.where("bed = '3'")).to_i
+  @br3high = Apartment.where('bed = 3').order(:price)[-1].price
+  @br3low = Apartment.where('bed = 3').order(:price)[0].price
+
+	@br4avg = ave_rent(Apartment.where("bed = '4'")).to_i
+  @br4med = median(Apartment.where("bed = '4'")).to_i
+  @br4high = Apartment.where('bed = 4').order(:price)[-1].price
+  @br4low = Apartment.where('bed = 4').order(:price)[0].price
+
+	@br5avg = ave_rent(Apartment.where("bed = '5'")).to_i
+  @br5med = median(Apartment.where("bed = '5'")).to_i
+  @br5high = Apartment.where('bed = 5').order(:price)[-1].price
+  @br5low = Apartment.where('bed = 5').order(:price)[0].price
+
+
 	#north
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
 		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
@@ -63,6 +85,27 @@ get '/index/:id' do
   @avg_percent = (@br1avg * 100.0 /@br1high).floor
   @med_percent = (@br1med * 100.0 /@br1high).floor
   @low_percent = (@br1low * 100.0 /@br1high).floor
+
+	@br2avg = ave_rent(Apartment.where("bed = '2'")).to_i
+  @br2med = median(Apartment.where("bed = 2")).to_i
+  @br2high = Apartment.where('bed = 2').order(:price)[-1].price
+  @br2low = Apartment.where('bed = 2').order(:price)[0].price
+
+	@br3avg = ave_rent(Apartment.where("bed = '3'")).to_i
+  @br3med = median(Apartment.where("bed = '3'")).to_i
+  @br3high = Apartment.where('bed = 3').order(:price)[-1].price
+  @br3low = Apartment.where('bed = 3').order(:price)[0].price
+
+	@br4avg = ave_rent(Apartment.where("bed = '4'")).to_i
+  @br4med = median(Apartment.where("bed = '4'")).to_i
+  @br4high = Apartment.where('bed = 4').order(:price)[-1].price
+  @br4low = Apartment.where('bed = 4').order(:price)[0].price
+
+	@br5avg = ave_rent(Apartment.where("bed = '5'")).to_i
+  @br5med = median(Apartment.where("bed = '5'")).to_i
+  @br5high = Apartment.where('bed = 5').order(:price)[-1].price
+  @br5low = Apartment.where('bed = 5').order(:price)[0].price
+
 	#north
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
 		@best_deal_N = best_deal(Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").order(:price))
@@ -186,7 +229,7 @@ post '/user/:id' do
 	elsif params['sqft'] != ''
 		combined_search = "sqft > #{params['sqft']}"
 	end
-	@search = Apartment.where(combined_search).order(:price)
+	@search = Apartment.where(combined_search).order(params['sort'])
 	@all = Apartment.all
 	erb(:user)
 end
