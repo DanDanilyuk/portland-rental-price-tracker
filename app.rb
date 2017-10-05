@@ -107,7 +107,7 @@ post '/signout' do
   if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id * 793}")
   else
-    erb(:login)
+    erb(:login_invalid)
   end
 end
 
@@ -122,7 +122,7 @@ post '/login' do
   if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id * 793}")
   else
-    erb(:login)
+    erb(:login_invalid)
   end
 end
 
@@ -193,6 +193,21 @@ end
 
 get '/confirm' do
 	erb(:confirm)
+end
+
+get '/login_invalid' do
+	erb(:login_invalid)
+end
+
+post '/login_invalid' do
+  email = params['email']
+  password = params['password']
+  user = User.find_by_email(email)
+  if BCrypt::Password.new(user.password) == password
+    redirect("/user/#{user.id * 793}")
+  else
+    erb(:login_invalid)
+  end
 end
 
 get '/signup' do
