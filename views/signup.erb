@@ -6,22 +6,43 @@
 <style>
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
-.bgimg {
+  .bgimg {
     background-image: url(/img/background_img4.jpg);
     min-height: 100%;
     background-position: center;
     background-size: cover;
-    opacity: 0.8;
-}
+    opacity: 0.9;
+  }
 </style>
 <body>
 
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <section id="feat">
+        <div class="container">
+            <div class="row features">
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="100ms">
+                  <h1><i class="fa fa-home"></i></h1>
+                  <h4>Consectetur Risus</h4>
+                  <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                </div>
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="300ms">
+                    <h1><i class="fa fa-usd"></i></h1>
+                    <h4>Ultricies Aenean</h4>
+                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                </div>
+                <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="500ms">
+                    <h1><i class="fa fa-sign-in"></i></h1>
+                    <h4>Cras Sollicitudin</h4>
+                    <p>Etiam porta sem malesuada magna mollis euismod. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Maecenas faucibus mollis interdum.</p>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="w3-display-topleft w3-padding-large w3-xlarge">
       <a href="/" class="w3-bar-item w3-button">HOME</a>
     </div>
     <div class="w3-display-middle">
-      <h1 class="w3-jumbo w3-animate-top">CREATE ACCOUNT</h1>
+      <h1 class="w3-jumbo w3-animate-top">SIGN UP</h1>
       <form action='/signup' method="post">
         <div class="form-group">
           <input id="username" name="username" class="form-control" type="text" placeholder="Username" required><br>
@@ -31,9 +52,6 @@ body, html {height: 100%}
           <button type="submit" class="btn btn-info">Sign Up</button>
         </div>
       </form>
-    </div>
-    <div class="w3-display-topright w3-padding-large">
-      SIGN UP
     </div>
   </div>
 

@@ -17,14 +17,14 @@
         <i class="fa fa-bars"></i>
       </a>
       <a href="/" class="w3-bar-item w3-button">HOME</a>
-      <a href="#info" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> INFO</a>
+      <a href="#value" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bar-chart"></i> VALUE</a>
       <a href="/signup" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-id-card"></i> SIGN UP</a>
       <a href="/login" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-sign-in"></i> LOG IN</a>
     </div>
 
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-      <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">INFO</a>
+      <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">VALUE</a>
       <a href="/signup" class="w3-bar-item w3-button" onclick="toggleFunction()">SIGN UP</a>
       <a href="/login" class="w3-bar-item w3-button" onclick="toggleFunction()">LOG IN</a>
     </div>
@@ -100,95 +100,91 @@
   </div>
 
   <!-- Second Parallax Image with Portfolio Text -->
-  <div class="bgimg-2 w3-display-container w3-opacity-min">
+  <div class="bgimg-2 w3-display-container w3-opacity-min"  id="value">
     <div class="w3-display-middle">
-      <span class="w3-xxlarge w3-text-white w3-wide">RESEARCH</span>
+      <span class="w3-xxlarge w3-text-white w3-wide">BEST VALUE</span>
+      <span class="w3-xxlarge w3-text-white w3-wide"><p class="w3-center"><em>(by area)</em></p><br></span>
     </div>
   </div>
-
-  <!-- Container Best Listings by Region -->
-  <div class="w3-content w3-container w3-padding-64" id="portfolio">
-    <h1 class="w3-center">THE BEST VALUE IN PORTLAND</h1>
-    <p class="w3-center"><em>(by area)</em></p><br>
 
     <!-- Responsive Grid. Carousel Jquery -->
 
-    <div class='w3-content w3-container w3-padding-64 w3-opacity-min'>
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-          <li data-target="#myCarousel" data-slide-to="3"></li>
-          <li data-target="#myCarousel" data-slide-to="4"></li>
-        </ol>
+  <div class='w3-content w3-container w3-padding-64 w3-opacity-min'>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+      </ol>
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-          <div class="item active">
-            <img src="/img/alberta1.jpg" alt="alberta1" style="width:100%;">
-            <div class="carousel-caption">
-              <h1>Best one bedroom deal in Northeast Portland:</h1>
-              <h1><a href="<%=@best_deal_NE.url%>"><%=@best_deal_NE.address%></a></h1>
-              <h4><%=@best_deal_NE.name%></h4>
-              <h1>$<%=@best_deal_NE.price%></h1>
-            </div>
-          </div>
-
-          <div class="item">
-            <img src="/img/darth.jpg" alt="darth" style="width:100%;">
-            <div class="carousel-caption">
-              <h1>Best one bedroom deal in Southeast Portland</h1>
-              <h1><a href="<%=@best_deal_SE.url%>"><%=@best_deal_SE.address%></a></h1>
-              <h4><%=@best_deal_SE.name%></h4>
-              <h1>$<%=@best_deal_SE.price%></h1>
-            </div>
-          </div>
-
-          <div class="item">
-            <img src="/img/cinema.jpg" alt="cinema" style="width:100%;">
-            <div class="carousel-caption">
-              <h1>Best one bedroom deal in Northwest Portland</h1>
-              <h1><a href="<%=@best_deal_NW.url%>"><%=@best_deal_NW.address%></a></h1>
-              <h4><%=@best_deal_NW.name%></h4>
-              <h1>$<%=@best_deal_NW.price%></h1>
-            </div>
-          </div>
-
-          <div class="item">
-            <img src="/img/bunyon.jpg" alt="bunyon" style="width:100%;">
-            <div class="carousel-caption">
-              <h1>Best one bedroom deal in North Portland</h1>
-              <h1><a href="<%=@best_deal_N.url%>"><%=@best_deal_N.address%></a></h1>
-              <h4><%=@best_deal_N.name%></h4>
-              <h1>$<%=@best_deal_N.price%></h1>
-            </div>
-          </div>
-
-          <div class="item">
-            <img src="/img/schnitz.jpg" alt="schnitz" style="width:100%;">
-            <div class="carousel-caption">
-              <h1>Best one bedroom deal in Southwest Portland</h1>
-              <h1><a href="<%=@best_deal_SW.url%>"><%=@best_deal_SW.address%></a></h1>
-              <h4><%=@best_deal_SW.name%></h4>
-              <h1>$<%=@best_deal_SW.price%></h1>
-            </div>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/img/alberta1.jpg" alt="alberta1" style="width:100%;">
+          <div class="carousel-caption">
+            <h1>Best one bedroom deal in Northeast Portland:</h1>
+            <h1><a href="<%=@best_deal_NE.url%>"><%=@best_deal_NE.address%></a></h1>
+            <h4><%=@best_deal_NE.name%></h4>
+            <h1>$<%=@best_deal_NE.price%></h1>
           </div>
         </div>
 
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-          <span class="sr-only">Next</span>
-        </a>
+        <div class="item">
+          <img src="/img/darth.jpg" alt="darth" style="width:100%;">
+          <div class="carousel-caption">
+            <h1>Best one bedroom deal in Southeast Portland</h1>
+            <h1><a href="<%=@best_deal_SE.url%>"><%=@best_deal_SE.address%></a></h1>
+            <h4><%=@best_deal_SE.name%></h4>
+            <h1>$<%=@best_deal_SE.price%></h1>
+          </div>
+        </div>
+
+        <div class="item">
+          <img src="/img/cinema.jpg" alt="cinema" style="width:100%;">
+          <div class="carousel-caption">
+            <h1>Best one bedroom deal in Northwest Portland</h1>
+            <h1><a href="<%=@best_deal_NW.url%>"><%=@best_deal_NW.address%></a></h1>
+            <h4><%=@best_deal_NW.name%></h4>
+            <h1>$<%=@best_deal_NW.price%></h1>
+          </div>
+        </div>
+
+        <div class="item">
+          <img src="/img/bunyon.jpg" alt="bunyon" style="width:100%;">
+          <div class="carousel-caption">
+            <h1>Best one bedroom deal in North Portland</h1>
+            <h1><a href="<%=@best_deal_N.url%>"><%=@best_deal_N.address%></a></h1>
+            <h4><%=@best_deal_N.name%></h4>
+            <h1>$<%=@best_deal_N.price%></h1>
+          </div>
+        </div>
+
+        <div class="item">
+          <img src="/img/schnitz.jpg" alt="schnitz" style="width:100%;">
+          <div class="carousel-caption">
+            <h1>Best one bedroom deal in Southwest Portland</h1>
+            <h1><a href="<%=@best_deal_SW.url%>"><%=@best_deal_SW.address%></a></h1>
+            <h4><%=@best_deal_SW.name%></h4>
+            <h1>$<%=@best_deal_SW.price%></h1>
+          </div>
+        </div>
       </div>
+
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </div>
+
 
   <!-- Modal for full size images on click-->
   <div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
