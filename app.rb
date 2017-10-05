@@ -150,7 +150,7 @@ post '/signout' do
   if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id * 793}")
   else
-    erb(:login)
+    erb(:login_invalid)
   end
 end
 
@@ -165,7 +165,7 @@ post '/login' do
   if BCrypt::Password.new(user.password) == password
     redirect("/user/#{user.id * 793}")
   else
-    erb(:login)
+    erb(:login_invalid)
   end
 end
 
@@ -229,13 +229,28 @@ post '/user/:id' do
 	elsif params['sqft'] != ''
 		combined_search = "sqft > #{params['sqft']}"
 	end
-	@search = Apartment.where(combined_search).order(:price)
+	@search = Apartment.where(combined_search).order(params['sort'])
 	@all = Apartment.all
 	erb(:user)
 end
 
 get '/confirm' do
 	erb(:confirm)
+end
+
+get '/login_invalid' do
+	erb(:login_invalid)
+end
+
+post '/login_invalid' do
+  email = params['email']
+  password = params['password']
+  user = User.find_by_email(email)
+  if BCrypt::Password.new(user.password) == password
+    redirect("/user/#{user.id * 793}")
+  else
+    erb(:login_invalid)
+  end
 end
 
 get '/signup' do
@@ -278,15 +293,19 @@ get '/update' do
 
   apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_northeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=3&postal=97213&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
+  apartments_northeast_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=1&postal=97212&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
+
+  apartments_northeast_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=1.9&postal=97211&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
+
+  apartments_northeast_portland3 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=0.5&postal=97213&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 
   apartments_northwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97229&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northwest Portland")
 
   apartments_southeast_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=3.5&postal=97206&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southeast Portland")
 
-  apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=3.5&postal=97221&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
+  apartments_southwest_portland = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=3.5&postal=97221&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Southwest Portland")
 
-  all_quadrants = apartments_north_portland1 + apartments_north_portland2 + apartments_northeast_portland + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
+  all_quadrants = apartments_north_portland1 + apartments_north_portland2 + apartments_northeast_portland1 + apartments_northeast_portland2 + apartments_northeast_portland3 + apartments_northwest_portland + apartments_southeast_portland + apartments_southwest_portland
   all_quadrants.each do |x|
     if Apartment.exists?({:name => x[:name],:address => x[:address],:price => x[:price]}) == false
 
