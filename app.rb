@@ -4,10 +4,6 @@ require 'open-uri'
 Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 
-Dynopoker.configure do |config|
-	config.address = 'https://portland-rent-tracker.herokuapp.com/update'
-end
-
 get '/' do
 	@user = nil
   @br1avg = ave_rent(Apartment.where("bed = '1'")).to_i
@@ -15,9 +11,9 @@ get '/' do
   @br1high = Apartment.where('bed = 1').order(:price)[-1].price
   @br1low = Apartment.where('bed = 1').order(:price)[0].price
 	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
-  @avg_percent = (@br1avg * 100.0 /@br1high).floor
-  @med_percent = (@br1med * 100.0 /@br1high).floor
-  @low_percent = (@br1low * 100.0 /@br1high).floor
+  @avg_percent = (@br1avg * 100.0 / @br1high).floor
+  @med_percent = (@br1med * 100.0 / @br1high).floor
+  @low_percent = (@br1low * 100.0 / @br1high).floor
 
 	@br2avg = ave_rent(Apartment.where("bed = '2'")).to_i
   @br2med = median(Apartment.where("bed = 2")).to_i
@@ -33,12 +29,6 @@ get '/' do
   @br4med = median(Apartment.where("bed = '4'")).to_i
   @br4high = Apartment.where('bed = 4').order(:price)[-1].price
   @br4low = Apartment.where('bed = 4').order(:price)[0].price
-
-	@br5avg = ave_rent(Apartment.where("bed = '5'")).to_i
-  @br5med = median(Apartment.where("bed = '5'")).to_i
-  @br5high = Apartment.where('bed = 5').order(:price)[-1].price
-  @br5low = Apartment.where('bed = 5').order(:price)[0].price
-
 
 	#north
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
@@ -81,9 +71,9 @@ get '/index/:id' do
   @br1high = Apartment.where('bed = 1').order(:price)[-1].price
   @br1low = Apartment.where('bed = 1').order(:price)[0].price
 	@br1sqr = ave_sqr(Apartment.where('bed = 1')).to_i
-  @avg_percent = (@br1avg * 100.0 /@br1high).floor
-  @med_percent = (@br1med * 100.0 /@br1high).floor
-  @low_percent = (@br1low * 100.0 /@br1high).floor
+  @avg_percent = (@br1avg * 100.0 / @br1high).floor
+  @med_percent = (@br1med * 100.0 / @br1high).floor
+  @low_percent = (@br1low * 100.0 / @br1high).floor
 
 	@br2avg = ave_rent(Apartment.where("bed = '2'")).to_i
   @br2med = median(Apartment.where("bed = 2")).to_i
@@ -99,11 +89,6 @@ get '/index/:id' do
   @br4med = median(Apartment.where("bed = '4'")).to_i
   @br4high = Apartment.where('bed = 4').order(:price)[-1].price
   @br4low = Apartment.where('bed = 4').order(:price)[0].price
-
-	@br5avg = ave_rent(Apartment.where("bed = '5'")).to_i
-  @br5med = median(Apartment.where("bed = '5'")).to_i
-  @br5high = Apartment.where('bed = 5').order(:price)[-1].price
-  @br5low = Apartment.where('bed = 5').order(:price)[0].price
 
 	#north
 	if Apartment.where("price < #{@br1avg} and bed = '1' and sqft > #{@br1sqr} and section = 'North Portland'").exists?
@@ -295,9 +280,9 @@ get '/update' do
 		end
 	end
 
-  apartments_north_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
+  apartments_north_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=2&postal=97217&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
-  apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
+  apartments_north_portland2 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=0&search_distance=2&postal=97203&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "North Portland")
 
   apartments_northeast_portland1 = Apartment.search_craigs('https://portland.craigslist.org/search/apa?postedToday=1&search_distance=1&postal=97212&min_price=499&max_price=6001&min_bedrooms=1&min_bathrooms=1&minSqft=1&availabilityMode=0', "Northeast Portland")
 

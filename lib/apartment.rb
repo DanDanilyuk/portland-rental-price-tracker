@@ -9,6 +9,7 @@ class Apartment <ActiveRecord::Base
     result.each do |link|
       html_title = open(link).read
       nokogiri_object_title = Nokogiri::HTML(html_title)
+      p apts.length
       title = nokogiri_object_title.xpath("//span[@id='titletextonly']").text
       br = nokogiri_object_title.xpath("//span[@class='shared-line-bubble'][1]/b[1]").children.text.to_i
       bathroom = nokogiri_object_title.xpath("//span[@class='shared-line-bubble'][1]/b[2]").children.text.to_i
