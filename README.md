@@ -10,7 +10,7 @@ An application that scrapes listing data for apartments and housing for rent in 
 
 Setup instructions:
 -------------------
-go to: https://portland-rent-tracker.herokuapp.com/
+go to: https://portland-rental-price-tracker.herokuapp.com/
 
 create an account by clicking the 'sign up' button in the top left, this will take you to the 'create account' page
 
